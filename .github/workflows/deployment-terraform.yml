@@ -33,8 +33,12 @@ jobs:
           terraform init
       - name: Terraform fmt
         run: | 
-         terraform fmt -check
-         echo "::set-output name=bash_return_Value::$?"
+         def fmtStatus = sh "terraform fmt -list=true -write=false -diff=true -check=true"
+         if (fmtStatus == 0) {
+           echo "All correct"
+         } else {
+           echo "Changes necessary"
+         }
       - name: Terraform validate
         run: terraform validate -no-color
         
