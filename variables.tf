@@ -1,9 +1,3 @@
-variable "azs" {
- type        = list(string)
- description = "Availability Zones"
- default     = ["${var.region}a", "${var.region}1b"]
-}
-
 variable "region" {
   description = "us-east-1"
   type = string
