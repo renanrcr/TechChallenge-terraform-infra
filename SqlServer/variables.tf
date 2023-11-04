@@ -50,11 +50,11 @@ variable "port" {
   type = number
 }
 
-variable "sqlserver-username" {
+variable "sqlserver_username" {
   description = "Username for the master DB user."
 }
 
-variable "sqlserver-password" {
+variable "sqlserver_password" {
   description = "password of the database"
 }
 

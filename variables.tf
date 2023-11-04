@@ -16,12 +16,12 @@ variable "secret_key" {
   description = "AWS secret key to create resources"
 }
 
-variable "sqlserver-username" {
+variable "sqlserver_username" {
   description = "Username for the master DB user."
   type = string
 }
 
-variable "sqlserver-password" {
-  description = "password of the database"
+variable "sqlserver_password" {
+  description = "Password of the database"
   type = string
 }

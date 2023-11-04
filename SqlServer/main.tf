@@ -4,8 +4,8 @@ resource "aws_db_instance" "sqlserver_default" {
   engine = var.engine
   engine_version = var.engine_version
   instance_class = var.instance_class
-  username = var.sqlserver-username
-  password = var.sqlserver-password
+  username = var.sqlserver_username
+  password = var.sqlserver_password
   port = var.port
   identifier = var.identifier
   skip_final_snapshot = var.skip_final_snapshot
