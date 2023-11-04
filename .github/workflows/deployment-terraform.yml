@@ -30,7 +30,7 @@ jobs:
           terraform_version: 1.5.4
       - name: Prepare environment
         run: |
-          terraform init -backend-config="environments/preprod_backend.hcl"
+          terraform init
       - name: Terraform fmt
         run: terraform fmt -check
       - name: Terraform validate
