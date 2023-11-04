@@ -24,6 +24,16 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           aws-access-key-id: ${{ secrets.ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+      - name: Setup terraform variables
+        run: |-
+          cat > pipeline.auto.tfvars <<EOF
+          access_key="${{secrets.ACCESS_KEY}}"
+          secret_key= "${{secrets.SECRET_KEY}}"
+          sqlserver_username="${{secrets.SQLSERVER_USERNAME}}"
+          sqlserver_password="${{secrets.SQLSERVER_PASSWORD}}"
+          environment="${{secrets.ENVIRONMENT}}"
+          region="${{secrets.AWS_REGION}}"
+          EOF
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -109,8 +119,8 @@ jobs:
           cat > pipeline.auto.tfvars <<EOF
           access_key="${{secrets.ACCESS_KEY}}"
           secret_key= "${{secrets.SECRET_KEY}}"
-          db_username="${{secrets.SQLSERVER_USERNAME}}"
-          db_password="${{secrets.SQLSERVER_PASSWORD}}"
+          sqlserver_username="${{secrets.SQLSERVER_USERNAME}}"
+          sqlserver_password="${{secrets.SQLSERVER_PASSWORD}}"
           environment="${{secrets.ENVIRONMENT}}"
           region="${{secrets.AWS_REGION}}"
           EOF
