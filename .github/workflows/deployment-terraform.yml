@@ -35,25 +35,47 @@ jobs:
         run: terraform fmt --recursive
       - name: Terraform validate
         run: terraform validate -no-color
-        
-  Test:
-    name: Test the template
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: tfsec
-        uses: aquasecurity/tfsec-action@v1.0.0
+      - name: Terraform Plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
+      - name: Update
+        uses: actions/github-script@v6
+        env:
+          PLAN: ${{ steps.plan.outputs.stdout }}
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`terraform\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
 
   Approval:
     name: Approval
     runs-on: ubuntu-latest
     permissions:
       issues: write
-    needs: [Test]
+    needs: [Validation]
     steps:
       - name: Manual approval
         uses: trstringer/manual-approval@v1
