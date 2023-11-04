@@ -9,7 +9,7 @@ resource "aws_db_instance" "sqlserver_default" {
   port = var.port
   identifier = var.identifier
   skip_final_snapshot = var.skip_final_snapshot
-  availability_zone = element(var.azs, count.index)
+  availability_zone = var.azs[0]
   tags = {
    Name = "${var.environment}-sqlserver"
  }
