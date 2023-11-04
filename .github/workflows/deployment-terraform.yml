@@ -29,13 +29,16 @@ jobs:
         with:
           terraform_version: 1.5.4
       - name: Prepare environment
-        run: |
-          terraform init
+        id: tf-init
+        run: terraform init
       - name: Terraform fmt
+        id: tf-fmt
         run: terraform fmt --recursive
       - name: Terraform validate
+        id: tf-validate
         run: terraform validate -no-color
       - name: Terraform Plan
+        id: tf-plan
         run: terraform plan -no-color -input=false
         continue-on-error: true
       - name: Update
@@ -45,10 +48,10 @@ jobs:
         with:
           github-token: ${{ secrets.TOKEN }}
           script: |
-            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.tf-fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.tf-init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.tf-validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.tf-plan.outcome }}\`
 
             <details><summary>Show Plan</summary>
 
@@ -67,7 +70,7 @@ jobs:
               body: output
             })
       - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
+        if: steps.tf-plan.outcome == 'failure'
         run: exit 1
 
   Approval:
