@@ -32,7 +32,9 @@ jobs:
         run: |
           terraform init
       - name: Terraform fmt
-        run: terraform fmt -check
+        run: | 
+         terraform fmt -check
+         echo "::set-output name=bash_return_Value::$?"
       - name: Terraform validate
         run: terraform validate -no-color
         
