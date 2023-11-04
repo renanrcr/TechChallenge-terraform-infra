@@ -57,3 +57,7 @@ variable "sqlserver-username" {
 variable "sqlserver-password" {
   description = "password of the database"
 }
+
+variable "azs" {
+  description = "Availability Zones"
+}
