@@ -11,8 +11,8 @@ module "network-vpc" {
 module "database-sqlserver" {
  source = "./SqlServer"
  environment = var.environment
- sqlserver-username = var.sqlserver_username
- sqlserver-password = var.sqlserver_password
+ sqlserver_username = var.sqlserver_username
+ sqlserver_password = var.sqlserver_password
  azs = local.azs
 }
 
