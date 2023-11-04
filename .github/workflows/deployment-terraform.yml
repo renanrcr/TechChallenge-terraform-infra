@@ -32,13 +32,7 @@ jobs:
         run: |
           terraform init
       - name: Terraform fmt
-        run: | 
-         def fmtStatus = sh "terraform fmt -list=true -write=false -diff=true -check=true"
-         if (fmtStatus == 0) {
-           echo "All correct"
-         } else {
-           echo "Changes necessary"
-         }
+        run: terraform fmt --recursive
       - name: Terraform validate
         run: terraform validate -no-color
         
