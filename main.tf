@@ -1,7 +1,11 @@
+locals {
+  azs = ["${var.region}-a", "${var.region}-1b"]
+}
+
 module "network-vpc" {
  source = "./Networks"
  environment = var.environment
- azs = var.azs
+ azs = local.azs
 }
 
 module "database-sqlserver" {
@@ -9,6 +13,7 @@ module "database-sqlserver" {
  environment = var.environment
  sqlserver-username = var.sqlserver-username
  sqlserver-password = var.sqlserver-password
+ azs = local.azs
 }
 
 module "bucket-s3" {
