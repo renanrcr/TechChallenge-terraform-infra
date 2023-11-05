@@ -6,9 +6,6 @@ on:
     paths-ignore:
      - "README.md"
 
-env:
-  prod_artifact_name: prod_tfplan-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
-
 jobs:
   Validation:
     name: Validate the template
@@ -133,22 +130,4 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -no-color -input=false
       - name: Execute terraform apply
-        run: terraform apply -auto-approve -input=false ${{ env.prod_artifact_name }}
-
-  TestProd:
-    name: Check Prod
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    needs: [DeployProd]
-    if: ${{ github.ref }} == "refs/heads/main"
-    steps:
-      - name: Login to AWS
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          aws-region: us-west-2
-          aws-access-key-id: ${{ secrets.ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.SECRET_KEY }}
-      - name: Run some checks
-        run: |
-           aws ec2 describe-vpcs --filter Name=tag:Name,Values=prodvpc
+        run: terraform apply -auto-approve -input=false
