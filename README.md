@@ -1,6 +1,8 @@
 # TechChallenge-terraform-infra
 FIAP - Software Architecture FASE 3 Tech Challenge
 
+![GitHub](https://img.shields.io/github/license/dropbox/dropbox-sdk-java)
+
 ## Requirements
 
 The following requirements are needed by this module:
