@@ -21,6 +21,13 @@ module "bucket-s3" {
   environment = var.environment
 }
 
+module "load-balancer" {
+  source = "./LoadBalancer"
+  environment = var.environment
+  vpc = module.network-vpc.vpc_id
+  public_subnets_id = module.network-vpc.public_subnet_id
+}
+
 module "secrets" {
   source = "./Secrets"
   environment = var.environment
