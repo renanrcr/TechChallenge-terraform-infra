@@ -1,5 +1,5 @@
 locals {
-  azs = ["${var.region}-a", "${var.region}-1b"]
+  azs = ["${var.region}-a", "${var.region}-b"]
 }
 
 module "network-vpc" {
