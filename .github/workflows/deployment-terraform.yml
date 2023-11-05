@@ -34,7 +34,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.4
+          terraform_version: 1.6.2
       - name: Prepare environment
         id: tf-init
         run: terraform init
@@ -108,7 +108,7 @@ jobs:
       - name: Login to AWS
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-region: us-west-2
+          aws-region: ${{ secrets.REGION }}
           aws-access-key-id: ${{ secrets.ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.SECRET_KEY }}
       - name: Setup terraform variables
