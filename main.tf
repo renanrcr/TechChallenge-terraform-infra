@@ -8,8 +8,8 @@ module "network-vpc" {
  azs = local.azs
 }
 
-module "database-sqlserver" {
- source = "./SqlServer"
+module "database" {
+ source = "./DataBase"
  environment = var.environment
  sqlserver_username = var.sqlserver_username
  sqlserver_password = var.sqlserver_password
