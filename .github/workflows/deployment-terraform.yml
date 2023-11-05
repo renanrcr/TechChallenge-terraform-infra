@@ -129,14 +129,11 @@ jobs:
         with:
           terraform_version: 1.5.4
       - name: Prepare environment
-        run: |
-          terraform init -backend-config="environments/prod_backend.hcl"
-      - name: Download artifact for deployment
-        uses: actions/download-artifact@v3
-        with:
-          name: prod-execution-plan
+        run: terraform init
+      - name: Terraform Plan
+        run: terraform plan -no-color -input=false
       - name: Execute terraform apply
-        run: terraform apply ${{ env.prod_artifact_name }}
+        run: terraform apply -auto-approve -input=false ${{ env.prod_artifact_name }}
 
   TestProd:
     name: Check Prod
