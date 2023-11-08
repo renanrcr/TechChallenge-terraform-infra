@@ -37,7 +37,7 @@ jobs:
           terraform_version: 1.6.2
       - name: Prepare environment
         id: tf-init
-        run: terraform init -backend-config="access_key=${{ secrets.ACCESS_KEY }}" -backend-config="secret_key=${{ secrets.SECRET_KEY }}" -backend-config="${{ secrets.AWS_REGION }}" 
+        run: terraform init 
       - name: Terraform fmt
         id: tf-fmt
         run: terraform fmt --recursive
