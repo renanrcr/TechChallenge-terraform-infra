@@ -61,3 +61,7 @@ variable "sqlserver_password" {
 variable "azs" {
   description = "Availability Zones"
 }
+
+variable "vpc_id" {
+  type = string
+}

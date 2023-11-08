@@ -1,3 +1,27 @@
+/*=============RDS=================*/
+resource "aws_security_group" "security-group-sqlserver" {
+  name        = "security-group-sqlserver"
+  description = "Security Group SQLServer"
+  vpc_id      = var.vpc_id
+  ingress {
+    description = "Port"
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name        = "Security-group-RDS"
+    Environment = "${var.environment}"
+  }
+}
+
 resource "aws_db_instance" "sqlserver_default" {
   allocated_storage = var.allocated_storage
   storage_type = var.storage_type

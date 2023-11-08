@@ -1,43 +1,46 @@
 locals {
-  azs = ["${var.region}a", "${var.region}b"]
+  dev_availability_zones = ["${var.region}a", "${var.region}b"]
 }
 
-module "network-vpc" {
- source = "./Networks"
- environment = var.environment
- azs = local.azs
+module "networkVPC" {
+  source = "./modules/networks"
+
+  availability_zones = local.dev_availability_zones
 }
 
-module "database" {
- source = "./DataBase"
- environment = var.environment
- sqlserver_username = var.sqlserver_username
- sqlserver_password = var.sqlserver_password
- azs = local.azs
-}
+module "databases" {
+  source = "./modules/database"
 
-module "bucket-s3" {
-  source = "./Bucket-S3"
   environment = var.environment
+  vpc_id = module.networkVPC.vpc_id   
+  sqlserver_username = var.sqlserver_username
+  sqlserver_password = var.sqlserver_password
+  azs = local.dev_availability_zones
 }
 
-module "load-balancer" {
-  source = "./LoadBalancer"
-  environment = var.environment
-  vpc = module.network-vpc.vpc_id
-  public_subnets_id = module.network-vpc.public_subnet_id
-}
+module "bucketS3" {
+  source = "./modules/bucket-s3"
 
-module "container-service" {
-  source = "./ContainerService"
   environment = var.environment
-  public_subnets_id = module.network-vpc.public_subnet_id
-  lb_engress_id = module.network-vpc.vpc_id
-  lb_ingress_id = module.network-vpc.vpc_id
-  lb_target_group_arn = module.load-balancer.lb_target_group_arn
 }
 
 module "secrets" {
-  source = "./Secrets"
+  source = "./modules/secrets"
+}
+
+module "loadBalancer" {
+  source = "./modules/loadBalancer"
+
+  vpc = module.networkVPC.vpc_id
+  public_subnets_id = module.networkVPC.public_subnet_id
+}
+
+module "ecs" {
+  source = "./modules/containerService"
+
   environment = var.environment
+  public_subnets_id = module.networkVPC.public_subnet_id
+  lb_engress_id = module.loadBalancer.egress_all_id
+  lb_ingress_id = module.loadBalancer.ingress_api_id
+  arns = module.loadBalancer.lb_target_group_arn
 }
