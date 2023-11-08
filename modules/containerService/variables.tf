@@ -10,10 +10,6 @@ variable "lb_ingress_id" {
   description = "Id of ingress"
 }
 
-variable "lb_target_group_arn" {
-  description = "Target group of the ALB"
-}
-
 variable "public_subnets_id" {
   description = "Public subnets"
 }
@@ -21,7 +17,7 @@ variable "public_subnets_id" {
 variable "image" {
   description = "Image"
   type = string
-  default = "renanrcr/techchallenge:latest"
+  default = "renanrcr/techchallenge:dev"
 }
 
 variable "image_name" {
@@ -34,4 +30,14 @@ variable "service_name" {
   description = "Service name"
   type = string
   default = "lanchonete-app-service"
+}
+
+variable "service_name_alb" {
+  description = "Service name api"
+  type = string
+  default = "lanchonete-app-api"
+}
+
+variable "arns" {
+  description = "List of SecretsManager secret ARNs the task execution role will be permitted to get/read"
 }

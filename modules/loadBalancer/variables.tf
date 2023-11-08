@@ -1,7 +1,3 @@
-variable "environment" {
-  description = "The Deployment environment"
-}
-
 variable "vpc" {
   description = "VPC"
 }
