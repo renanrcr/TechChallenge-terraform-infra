@@ -22,5 +22,3 @@ output "db_instance_engine" {
   description = "Instance Engine Outputs"
   value = try(aws_db_instance.sqlserver_default.engine, null)
 }
-
-
