@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "secrets" {
-  name = "techchallenge-terraform-terraform"
+  name = "techchallenge-terraform-fiap"
  tags = {
   Name = "secrets"
  }
