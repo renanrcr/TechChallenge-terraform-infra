@@ -8,6 +8,21 @@ Este projeto foi criado como parte do Tech Challenge do curso da Pós Tech - Sof
 
 Desta forma, foram criados módulos para gerenciar a parte de redes, banco de dados, armazenamento e orquestração do container.
 
+## :wrench: Módulos
+
+•	Bucket-S3 - o armazenamento S3 foi configurado para o projeto Lambda no formato de arquivo .ZIP.
+
+•	ContainerService - o ECS foi configurado para orquestrar os containers da aplicação que provisiona um Cluster, Roles, Task Definition e os serviços que estão programados para manter a aplicação em execução.
+
+•	DataBase - este módulo é configurado o Amazon RDS com Microsoft SQL Server, DynamoDB e as regras de segurança do banco de dados.
+
+•	LoadBalancer - o ALB foi configurado para garantir o tráfego da instância ECS que trabalha em conjunto com o Listener, Security Groups e  Target Group.
+
+•	Networks - este é o modulo de redes da infra que foi criada na AWS que é composto das seguintes configurações: VPC, Subnets, Internet Gateway, Subnet Group (banco de dados), Security Group (VPC) e a Route Tables.
+
+•	Secrets - o Secrets Manager é responsavel pelo armazenamento das credenciais.
+
+
 ## :wrench: Tecnologias utilizadas
 * Terraform;
 
