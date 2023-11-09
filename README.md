@@ -43,6 +43,10 @@ The following providers are used by this module:
 
 - <a name="provider_aws"></a> [aws](#provider\_aws) (>= 5.0.0)
 
+## Infraestrutura
+
+![infra](https://github.com/renanrcr/TechChallenge-terraform-infra/assets/83503490/2e160119-f022-4780-87a1-4be3bcb5b445)
+
 ## :handshake: Colaboradores
 <table>
   <tr>
